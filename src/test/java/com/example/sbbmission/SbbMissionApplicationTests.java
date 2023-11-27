@@ -3,10 +3,9 @@ package com.example.sbbmission;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.example.sbbmission.entity.Answer;
-import com.example.sbbmission.entity.Question;
-import com.example.sbbmission.repository.QuestionRepository;
-import java.time.LocalDateTime;
+import com.example.sbbmission.answer.Answer;
+import com.example.sbbmission.question.Question;
+import com.example.sbbmission.question.QuestionRepository;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
