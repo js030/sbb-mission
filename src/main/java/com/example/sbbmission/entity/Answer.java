@@ -1,4 +1,4 @@
-package com.example.sbbmission;
+package com.example.sbbmission.entity;
 
 
 import jakarta.persistence.Column;

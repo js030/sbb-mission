@@ -1,5 +1,6 @@
-package com.example.sbbmission;
+package com.example.sbbmission.entity;
 
+import com.example.sbbmission.entity.Answer;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +28,7 @@ public class Question {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private LocalDateTime createdDate;
+    private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
