@@ -1,25 +1,25 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="flex items-start justify-center h-screen pt-20">
     <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post" class="w-full max-w-md mx-auto rounded border p-5 bg-white">
-        <h1 class="text-2xl font-bold mb-5 text-center">회원가입</h1>
+        <h1 class="text-2xl font-bold mb-5 text-center"><i class="fas fa-user-plus"></i> 회원가입</h1>
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
         <div class="mb-3">
-            <label for="username" class="form-label text-lg text-warmGray-900">사용자ID</label>
+            <label for="username" class="form-label text-lg text-warmGray-900"><i class="fas fa-user"></i> 사용자ID</label>
             <input type="text" th:field="*{username}" class="form-control bg-warmGray-100 border-warmGray-300 py-3 w-full">
         </div>
         <div class="mb-3">
-            <label for="password1" class="form-label text-lg text-warmGray-900">비밀번호</label>
+            <label for="password1" class="form-label text-lg text-warmGray-900"><i class="fas fa-lock"></i> 비밀번호</label>
             <input type="password" th:field="*{password1}" class="form-control bg-warmGray-100 border-warmGray-300 py-3 w-full">
         </div>
         <div class="mb-3">
-            <label for="password2" class="form-label text-lg text-warmGray-900">비밀번호 확인</label>
+            <label for="password2" class="form-label text-lg text-warmGray-900"><i class="fas fa-lock"></i> 비밀번호 확인</label>
             <input type="password" th:field="*{password2}" class="form-control bg-warmGray-100 border-warmGray-300 py-3 w-full">
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label text-lg text-warmGray-900">이메일</label>
+            <label for="email" class="form-label text-lg text-warmGray-900"><i class="fas fa-envelope"></i> 이메일</label>
             <input type="email" th:field="*{email}" class="form-control bg-warmGray-100 border-warmGray-300 py-3 w-full">
         </div>
-        <button type="submit" class="btn px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg">회원가입</button>
+        <button type="submit" class="btn px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white text-lg w-full block mx-auto">회원가입</button>
     </form>
 </div>
 </html>

@@ -3,9 +3,9 @@
         <div class="flex justify-between items-center">
             <a class="navbar-brand text-lg font-bold text-white px-4 py-2 rounded bg-blue-500 hover:bg-blue-600" href="/">SBB</a>
             <div class="flex">
-                <a class="nav-link text-warmGray-900 ml-4 px-4 py-2 rounded bg-sky-50 hover:bg-warmGray-400" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-                <a class="nav-link text-warmGray-900 ml-4 px-4 py-2 rounded bg-sky-50 hover:bg-warmGray-400" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
-                <a class="nav-link text-warmGray-900 ml-4 px-4 py-2 rounded bg-sky-50 hover:bg-warmGray-400" th:href="@{/user/signup}">회원가입</a>
+                <a class="nav-link text-warmGray-900 ml-4 px-4 py-2 rounded bg-sky-50 hover:bg-warmGray-400" sec:authorize="isAnonymous()" th:href="@{/user/login}"><i class="fas fa-sign-in-alt"></i> 로그인</a>
+                <a class="nav-link text-warmGray-900 ml-4 px-4 py-2 rounded bg-sky-50 hover:bg-warmGray-400" sec:authorize="isAuthenticated()" th:href="@{/user/logout}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a>
+                <a class="nav-link text-warmGray-900 ml-4 px-4 py-2 rounded bg-sky-50 hover:bg-warmGray-400" th:href="@{/user/signup}"><i class="fas fa-user-plus"></i> 회원가입</a>
             </div>
         </div>
     </div>

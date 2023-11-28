@@ -1,7 +1,10 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container mx-auto my-3">
     <!-- 질문 -->
-    <h2 class="border-b-2 ml-5 py-4 text-xl font-extrabold text-gray-700" th:text="${question.subject}"></h2>
+    <h2 class="border-b-2 ml-4 py-4 text-xl font-extrabold text-gray-700">
+        <i class="fas fa-book"></i>
+        <span th:text="${question.subject}"></span>
+    </h2>
     <div class="my-3 bg-sky-50 shadow-lg rounded-lg overflow-hidden">
         <div class="p-6 bg-warmGray-50">
             <div class="text-gray-600" th:utext="${@commonUtil.markdown(question.content)}"></div>
@@ -20,23 +23,29 @@
             <div class="my-3">
                 <a href="javascript:void(0);" class="recommend btn btn-sm bg-sky-200 text-white py-2 px-4 rounded shadow hover:bg-sky-300"
                    th:data-uri="@{|/question/vote/${question.id}|}">
-                    추천
+                    <i class="fas fa-thumbs-up"></i> 추천
                     <span class="badge rounded-full bg-sky-50 ml-2" th:text="${#lists.size(question.voter)}"></span>
                 </a>
-                <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm bg-sky-200 hover:bg-sky-300 text-white py-2 px-4 rounded shadow  ml-2"
+                <a th:href="@{|/question/modify/${question.id}|}"
+                   class="btn btn-sm bg-sky-200 hover:bg-sky-300 text-white py-2 px-4 rounded shadow ml-2"
                    sec:authorize="isAuthenticated()"
-                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
-                   th:text="수정"></a>
+                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}">
+                    <i class="fas fa-edit"></i> 수정
+                </a>
                 <a href="javascript:void(0);" th:data-uri="@{|/question/delete/${question.id}|}"
-                   class="delete btn btn-sm bg-sky-200 text-white py-2 px-4 rounded shadow hover:bg-blue-300 ml-2" sec:authorize="isAuthenticated()"
-                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
-                   th:text="삭제"></a>
+                   class="delete btn btn-sm bg-sky-200 text-white py-2 px-4 rounded shadow hover:bg-blue-300 ml-2"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}">
+                    <i class="fas fa-trash"></i> 삭제
+                </a>
             </div>
         </div>
     </div>
     <!-- 답변의 갯수 표시 -->
-    <h5 class="border-b-2 my-3 py-2 text-lg font-bold text-gray-700"
-        th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+    <h5 class="border-b-2 my-3 py-2 text-lg font-bold text-gray-700">
+        <i class="fas fa-comment"></i>
+        <span th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></span>
+    </h5>
     <!-- 답변 반복 시작 -->
     <div class="my-3 bg-warmGray-100 shadow-lg rounded-lg overflow-hidden" th:each="answer : ${question.answerList}">
         <a th:id="|answer_${answer.id}|"></a>
@@ -57,17 +66,21 @@
             <div class="my-3">
                 <a href="javascript:void(0);" class="recommend btn btn-sm bg-sky-200 text-white py-2 px-4 rounded shadow hover:bg-sky-300"
                    th:data-uri="@{|/answer/vote/${answer.id}|}">
-                    추천
+                    <i class="fas fa-thumbs-up"></i>추천
                     <span class="badge rounded-full bg-sky-50 ml-2" th:text="${#lists.size(answer.voter)}"></span>
                 </a>
-                <a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm bg-sky-200 text-white py-2 px-4 rounded shadow hover:bg-sky-300 ml-2"
+                <a th:href="@{|/answer/modify/${answer.id}|}"
+                   class="btn btn-sm bg-sky-200 hover:bg-sky-300 text-white py-2 px-4 rounded shadow ml-2"
                    sec:authorize="isAuthenticated()"
-                   th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
-                   th:text="수정"></a>
+                   th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}">
+                    <i class="fas fa-edit"></i> 수정
+                </a>
                 <a href="javascript:void(0);" th:data-uri="@{|/answer/delete/${answer.id}|}"
-                   class="delete btn btn-sm bg-sky-200 text-white py-2 px-4 rounded shadow hover:bg-sky-300 ml-2" sec:authorize="isAuthenticated()"
-                   th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
-                   th:text="삭제"></a>
+                   class="delete btn btn-sm bg-sky-200 text-white py-2 px-4 rounded shadow hover:bg-sky-300 ml-2"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}">
+                    <i class="fas fa-trash"></i> 삭제
+                </a>
             </div>
         </div>
     </div>
@@ -77,7 +90,9 @@
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
         <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control resize-none shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="10"></textarea>
         <textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control resize-none shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="10"></textarea>
-        <input type="submit" value="답변등록" class="btn btn-primary my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button type="submit" class="btn btn-primary my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <i class="fas fa-paper-plane"></i> 답변등록
+        </button>
     </form>
 </div>
 <script layout:fragment="script" type='text/javascript'>
