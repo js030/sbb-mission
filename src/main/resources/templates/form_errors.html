@@ -1,4 +1,13 @@
-<div th:fragment="formErrorsFragment" class="alert alert-danger"
-     role="alert" th:if="${#fields.hasAnyErrors()}">
-    <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+<div th:fragment="formErrorsFragment" class="alert alert-danger mt-5 flex items-start bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert" th:if="${#fields.hasAnyErrors()}">
+    <div class="py-1">
+        <svg class="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M2 10a8 8 0 1 0 16 0 8 8 0 0 0-16 0zm9-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1 1a1 1 0 0 1-1 1h1a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0h1a1 1 0 0 1-1-1v-2zm0 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </svg>
+    </div>
+    <div>
+        <p class="font-bold">다음 항목을 확인해주세요:</p>
+        <ul class="list-disc list-inside">
+            <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+        </ul>
+    </div>
 </div>
