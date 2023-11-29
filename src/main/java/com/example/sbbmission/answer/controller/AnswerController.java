@@ -3,6 +3,7 @@ package com.example.sbbmission.answer.controller;
 import com.example.sbbmission.answer.dto.AnswerForm;
 import com.example.sbbmission.answer.service.AnswerService;
 import com.example.sbbmission.answer.entity.Answer;
+import com.example.sbbmission.common.dto.RsData;
 import com.example.sbbmission.question.entity.Question;
 import com.example.sbbmission.question.service.QuestionService;
 import com.example.sbbmission.user.entity.SiteUser;
@@ -33,13 +34,13 @@ public class AnswerController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}")
     public String createAnswer(Model model, @PathVariable("id") Integer id, @Valid AnswerForm answerForm, BindingResult bindingResult, Principal principal){
-        Question question = this.questionService.getQuestion(id);
+        RsData<Question> question = this.questionService.getQuestion(id);
         SiteUser siteUser = userService.getUser(principal.getName());
         if (bindingResult.hasErrors()){
-            model.addAttribute("question", question);
+            model.addAttribute("question", question.getData());
             return "question_detail";
         }
-        Answer answer = this.answerService.create(question, answerForm.getContent(), siteUser);
+        Answer answer = this.answerService.create(question.getData(), answerForm.getContent(), siteUser);
         return String.format("redirect:/question/detail/%s#answer_%s", answer.getQuestion().getId(), answer.getId());
     }
 

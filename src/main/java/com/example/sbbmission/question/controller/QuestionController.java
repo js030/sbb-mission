@@ -1,6 +1,7 @@
 package com.example.sbbmission.question.controller;
 
 import com.example.sbbmission.answer.dto.AnswerForm;
+import com.example.sbbmission.common.dto.RsData;
 import com.example.sbbmission.question.dto.QuestionForm;
 import com.example.sbbmission.question.service.QuestionService;
 import com.example.sbbmission.question.entity.Question;
@@ -42,8 +43,8 @@ public class QuestionController {
 
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm){
-        Question question = this.questionService.getQuestion(id);
-        model.addAttribute("question", question);
+        RsData<Question> question = this.questionService.getQuestion(id);
+        model.addAttribute("question", question.getData());
         return "question_detail";
     }
 
@@ -67,12 +68,12 @@ public class QuestionController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal) {
-        Question question = this.questionService.getQuestion(id);
-        if(!question.getAuthor().getUsername().equals(principal.getName())) {
+        RsData<Question> question = this.questionService.getQuestion(id);
+        if(!question.getData().getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        questionForm.setSubject(question.getSubject());
-        questionForm.setContent(question.getContent());
+        questionForm.setSubject(question.getData().getSubject());
+        questionForm.setContent(question.getData().getContent());
         return "question_form";
     }
 
@@ -82,31 +83,31 @@ public class QuestionController {
         if (bindingResult.hasErrors()) {
             return "question_form";
         }
-        Question question = this.questionService.getQuestion(id);
-        if (!question.getAuthor().getUsername().equals(principal.getName())){
+        RsData<Question> question = this.questionService.getQuestion(id);
+        if (!question.getData().getAuthor().getUsername().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다");
         }
-        this.questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+        this.questionService.modify(question.getData(), questionForm.getSubject(), questionForm.getContent());
         return String.format("redirect:/question/detail/%s", id);
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
     public String questionDelete(Principal principal, @PathVariable("id") Integer id){
-        Question question = this.questionService.getQuestion(id);
-        if (!question.getAuthor().getUsername().equals(principal.getName())){
+        RsData<Question> question = this.questionService.getQuestion(id);
+        if (!question.getData().getAuthor().getUsername().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
-        this.questionService.delete(question);
+        this.questionService.delete(question.getData());
         return "redirect:/";
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/vote/{id}")
     public String questionVote(Principal principal, @PathVariable("id") Integer id){
-        Question question = this.questionService.getQuestion(id);
+        RsData<Question> question = this.questionService.getQuestion(id);
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        this.questionService.vote(question, siteUser);
+        this.questionService.vote(question.getData(), siteUser);
         return String.format("redirect:/question/detail/%s", id);
     }
 

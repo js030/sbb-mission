@@ -9,13 +9,16 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class AnswerService {
 
     private final AnswerRepository answerRepository;
 
+    @Transactional
     public Answer create(Question question, String content, SiteUser author) {
         Answer answer = Answer.builder()
                 .content(content)
@@ -36,15 +39,18 @@ public class AnswerService {
         }
     }
 
+    @Transactional
     public void modify(Answer answer, String content) {
         answer.modifyContent(content);
         this.answerRepository.save(answer);
     }
 
+    @Transactional
     public void delete(Answer answer) {
         this.answerRepository.delete(answer);
     }
 
+    @Transactional
     public void vote(Answer answer, SiteUser siteUser) {
         answer.getVoter().add(siteUser);
         this.answerRepository.save(answer);

@@ -1,5 +1,6 @@
 package com.example.sbbmission.question.service;
 
+import com.example.sbbmission.common.dto.RsData;
 import com.example.sbbmission.common.exception.DataNotFoundException;
 import com.example.sbbmission.answer.entity.Answer;
 import com.example.sbbmission.question.entity.Question;
@@ -21,9 +22,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
@@ -36,15 +39,17 @@ public class QuestionService {
         return this.questionRepository.findAllByKeyword(kw, pageable);
     }
 
-    public Question getQuestion(Integer id) {
+    public RsData<Question> getQuestion(Integer id) {
         Optional<Question> question = this.questionRepository.findById(id);
         if (question.isPresent()) {
-            return question.get();
+
+            return RsData.of("200", "%s님의 질문이 성공적으로 등록되었습니다.".formatted(question.get().getAuthor()),question.get());
         } else {
             throw new DataNotFoundException("question not found");
         }
     }
 
+    @Transactional
     public void create(String subject, String content, SiteUser user) {
         Question q = Question.builder()
                 .subject(subject)
@@ -55,15 +60,18 @@ public class QuestionService {
         this.questionRepository.save(q);
     }
 
+    @Transactional
     public void modify(Question question, String subject, String content) {
         question.modify(subject, content);
         this.questionRepository.save(question);
     }
 
+    @Transactional
     public void delete(Question question) {
         this.questionRepository.delete(question);
     }
 
+    @Transactional
     public void vote(Question question, SiteUser siteUser) {
         question.getVoter().add(siteUser);
         this.questionRepository.save(question);
