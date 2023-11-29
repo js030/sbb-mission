@@ -7,6 +7,17 @@ plugins {
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
+// QUERY_DSL 경로 및 설정 추가
+def querydslSrcDir = 'src/main/generated'
+
+clean {
+    delete file(querydslSrcDir)
+}
+
+tasks.withType(JavaCompile) {
+    options.generatedSourceOutputDirectory = file(querydslSrcDir)
+}
+
 java {
     sourceCompatibility = '17'
 }
@@ -17,24 +28,49 @@ configurations {
     }
 }
 
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // WEB
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // LOMBOK
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //DEVTOOL
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // DB
     runtimeOnly 'com.h2database:h2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // QUERY_DSL
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    // THYMELEAF
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    // VALIDATION
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // SECURITY
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+
+    // MARKUP
     implementation 'org.commonmark:commonmark:0.21.0'
+
+    // TEST
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
 
 tasks.named('bootBuildImage') {
