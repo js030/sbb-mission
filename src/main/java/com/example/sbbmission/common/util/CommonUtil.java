@@ -1,4 +1,4 @@
-package com.example.sbbmission;
+package com.example.sbbmission.common.util;
 
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;

@@ -1,8 +1,10 @@
-package com.example.sbbmission.question;
+package com.example.sbbmission.question.service;
 
-import com.example.sbbmission.DataNotFoundException;
-import com.example.sbbmission.answer.Answer;
-import com.example.sbbmission.user.SiteUser;
+import com.example.sbbmission.common.exception.DataNotFoundException;
+import com.example.sbbmission.answer.entity.Answer;
+import com.example.sbbmission.question.entity.Question;
+import com.example.sbbmission.question.repository.QuestionRepository;
+import com.example.sbbmission.user.entity.SiteUser;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;

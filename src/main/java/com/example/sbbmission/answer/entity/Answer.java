@@ -1,8 +1,8 @@
-package com.example.sbbmission.question;
+package com.example.sbbmission.answer.entity;
 
-import com.example.sbbmission.answer.Answer;
-import com.example.sbbmission.user.SiteUser;
-import jakarta.persistence.CascadeType;
+
+import com.example.sbbmission.question.entity.Question;
+import com.example.sbbmission.user.entity.SiteUser;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,9 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,14 +18,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Question {
+public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(length = 200)
-    private String subject;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -36,8 +31,8 @@ public class Question {
 
     private LocalDateTime modifyDate;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-    private List<Answer> answerList;
+    @ManyToOne
+    private Question question;
 
     @ManyToOne
     private SiteUser author;

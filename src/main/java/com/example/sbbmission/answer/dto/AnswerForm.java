@@ -1,4 +1,4 @@
-package com.example.sbbmission.answer;
+package com.example.sbbmission.answer.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

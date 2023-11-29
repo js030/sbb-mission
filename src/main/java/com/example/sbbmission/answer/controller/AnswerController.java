@@ -1,9 +1,12 @@
-package com.example.sbbmission.answer;
+package com.example.sbbmission.answer.controller;
 
-import com.example.sbbmission.question.Question;
-import com.example.sbbmission.question.QuestionService;
-import com.example.sbbmission.user.SiteUser;
-import com.example.sbbmission.user.UserService;
+import com.example.sbbmission.answer.dto.AnswerForm;
+import com.example.sbbmission.answer.service.AnswerService;
+import com.example.sbbmission.answer.entity.Answer;
+import com.example.sbbmission.question.entity.Question;
+import com.example.sbbmission.question.service.QuestionService;
+import com.example.sbbmission.user.entity.SiteUser;
+import com.example.sbbmission.user.service.UserService;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;

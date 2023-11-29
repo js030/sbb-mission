@@ -1,4 +1,4 @@
-package com.example.sbbmission;
+package com.example.sbbmission.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

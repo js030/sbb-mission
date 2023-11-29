@@ -1,4 +1,4 @@
-package com.example.sbbmission.user;
+package com.example.sbbmission.user.entity;
 
 import lombok.Getter;
 

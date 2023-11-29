@@ -1,5 +1,6 @@
-package com.example.sbbmission.user;
+package com.example.sbbmission.user.repository;
 
+import com.example.sbbmission.user.entity.SiteUser;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
