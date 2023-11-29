@@ -17,11 +17,12 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
 
     public Answer create(Question question, String content, SiteUser author) {
-        Answer answer = new Answer();
-        answer.setContent(content);
-        answer.setCreateDate(LocalDateTime.now());
-        answer.setQuestion(question);
-        answer.setAuthor(author);
+        Answer answer = Answer.builder()
+                .content(content)
+                .question(question)
+                .author(author)
+                .build();
+
         this.answerRepository.save(answer);
         return answer;
     }
@@ -36,8 +37,7 @@ public class AnswerService {
     }
 
     public void modify(Answer answer, String content) {
-        answer.setContent(content);
-        answer.setModifyDate(LocalDateTime.now());
+        answer.modifyContent(content);
         this.answerRepository.save(answer);
     }
 

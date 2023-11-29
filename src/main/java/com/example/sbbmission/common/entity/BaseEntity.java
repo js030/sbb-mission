@@ -18,11 +18,11 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 @SuperBuilder
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter
 @ToString
 public class BaseEntity {
 
@@ -35,6 +35,9 @@ public class BaseEntity {
     private LocalDateTime createDate;
 
     @LastModifiedDate
-    @Setter
     private LocalDateTime modifyDate;
+
+    public void updateModifyDate() {
+        this.modifyDate = LocalDateTime.now();
+    }
 }
