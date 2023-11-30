@@ -1,8 +1,8 @@
 package com.example.sbbmission.question.service;
 
+import com.example.sbbmission.answer.entity.Answer;
 import com.example.sbbmission.common.dto.RsData;
 import com.example.sbbmission.common.exception.DataNotFoundException;
-import com.example.sbbmission.answer.entity.Answer;
 import com.example.sbbmission.question.entity.Question;
 import com.example.sbbmission.question.repository.QuestionRepository;
 import com.example.sbbmission.user.entity.SiteUser;
@@ -12,7 +12,6 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,12 +30,14 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
+
     public Page<Question> getList(int page, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         PageRequest pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        Specification<Question> spec = search(kw);
-        return this.questionRepository.findAllByKeyword(kw, pageable);
+        Specification<Question> spec = search(kw); // Specification 활용
+        questionRepository.findAllByKeyword(kw, pageable); // 그냥 @Query 활용하여 sql 쿼리 작성
+        return questionRepository.findAllByKeyword(kw, pageable); // QueryDsl 활용
     }
 
     public RsData<Question> getQuestion(Integer id) {
